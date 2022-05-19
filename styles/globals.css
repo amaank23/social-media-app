@@ -1,3 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: rgb(244, 255, 253);
+  --secondary-color: #011936;
+}
 html,
 body {
   padding: 0;
@@ -14,3 +22,6 @@ a {
 * {
   box-sizing: border-box;
 }
+section {
+  padding: 0.75rem;
+                  }
