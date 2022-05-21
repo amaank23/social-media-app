@@ -1,16 +1,23 @@
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/router';
 
 const Login = ({ setIsModalVisible }) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    const [error, setError] = useState('');
+    const router = useRouter();
     async function handleSubmit(e){
         e.preventDefault();
         const res = await signIn('credentials', { email, password, redirect: false })
-        console.log(res);
+        const { error } = res;
+        if(error){
+          setError(error)
+          return;
+        }
 
+        router.push('/')
         
     }
   return (
@@ -26,6 +33,7 @@ const Login = ({ setIsModalVisible }) => {
         Password
       </label>
       <input className="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)}  placeholder="******************" />
+      {error ? (<small className='text-red-600 font-bold block'>{error}</small>) : ''}
       <button className="text-xs text-logo" onClick={() => setIsModalVisible(true)}>create new account</button>
     </div>
     <div className="flex items-center justify-between">
